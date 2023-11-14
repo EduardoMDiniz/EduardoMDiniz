@@ -2,7 +2,8 @@
 
 <div  align="center" style="margin-bottom:100px">
 <img width=55% align="center"  src="https://github-readme-streak-stats.herokuapp.com?user=EduardoMDiniz&theme=radical&mode=weekly" />
-<img width=40% align="center" src="https://github-readme-stats-git-main-EduardoMDiniz.vercel.app/api/top-langs/?username=Eduardomdiniz&show_icons=true&theme=radical&layout=" />
+<img width=40% align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=EduardoMDiniz&theme=dark&hide_border=false&include_all_commits=true&count_private=true&layout=compact"
+        alt="Github stats" />
  </div>
 
  &nbsp;
