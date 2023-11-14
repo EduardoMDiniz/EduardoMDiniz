@@ -2,8 +2,7 @@
 
 <div  align="center" style="margin-bottom:100px">
 <img width=55% align="center"  src="https://github-readme-streak-stats.herokuapp.com?user=EduardoMDiniz&theme=radical&mode=weekly" />
-<img align="center" src="https://github-readme-stats.vercel.app/api/top-langs/?username=EduardoMDiniz&theme=dracula&hide_langs_below=1" alt="ilustração da leitura de linguagens de programação no perfil"/>
- </div>
+<img width=40% align="center" src="https://github-readme-stats-git-main-EduardoMDiniz.vercel.app/api/top-langs/?username=EduardoMDiniz&show_icons=true&theme=radical&layout=compact" />
 
  &nbsp;
  &nbsp;
