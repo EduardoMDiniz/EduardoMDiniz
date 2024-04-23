@@ -1,4 +1,4 @@
-<p align="center">Universitário de SI. Atualmente trabalhando numa empresa com Front, mas gosto mesmo de estudar Back. </p>&nbsp;
+<p align="center">Universitário de SI </p>&nbsp;
 
 <div  align="center" style="margin-bottom:100px">
 <img width=55% align="center"  src="https://github-readme-streak-stats.herokuapp.com?user=EduardoMDiniz&theme=radical&mode=weekly" />
