@@ -6,6 +6,7 @@
  &nbsp;
 
 
+
 #### Main:
 
 ![Git](https://img.shields.io/badge/GIT-E44C30?style=for-the-badge&logo=git&logoColor=white)&nbsp;
@@ -46,6 +47,8 @@
 ![Notion](https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white)&nbsp;
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)&nbsp;
 ![Windows](https://img.shields.io/badge/Windows-323330?style=for-the-badge&logo=windows&logoColor=white)&nbsp;
+
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=EduardoMDiniz&layout=pie)](https://github.com/EduardoMDiniz/github-readme-stats)
 
 &nbsp;
 &nbsp;
