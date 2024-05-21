@@ -48,7 +48,7 @@
 ![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=ubuntu&logoColor=white)&nbsp;
 ![Windows](https://img.shields.io/badge/Windows-323330?style=for-the-badge&logo=windows&logoColor=white)&nbsp;
 
-[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=EduardoMDiniz&layout=pie)](https://github.com/EduardoMDiniz/github-readme-stats)
+[![Top Langs](https://github-readme-stats.vercel.app/api/top-langs/?username=EduardoMDiniz&layout=pie)](https://github-readme-stats.vercel.app/api?username=EduardoMDiniz&show_icons=true&theme=radical)
 
 &nbsp;
 &nbsp;
