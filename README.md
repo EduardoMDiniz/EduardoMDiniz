@@ -16,7 +16,7 @@
 ![Godot Engine](https://img.shields.io/badge/GODOT-%23FFFFFF.svg?style=for-the-badge&logo=godot-engine)&nbsp;
 ![GameMaker](https://custom-icon-badges.herokuapp.com/badge/Game%20Maker-262c3e?style=for-the-badge&logo=gamemaker&logoColor=white)&nbsp;
 
-<img src="https://i.pinimg.com/564x/2d/e7/15/2de715eb7254d87c10462cbcc69e6c0d.jpg" min-width="400px" max-width="400px" width="400px" align="right" alt="Computador iuriCode">
+<img src="https://i.pinimg.com/564x/df/03/a3/df03a37dd5ab9334d88312401f4f3fc1.jpg" min-width="400px" max-width="400px" width="400px" align="right" alt="Computador iuriCode">
 
 #### Secundário:
 
