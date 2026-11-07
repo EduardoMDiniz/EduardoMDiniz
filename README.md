@@ -1,17 +1,8 @@
 # Eduardo Diniz
 
-Analista de software e dados · Graduado em **Sistemas de Informação** pela UNIFESSPA.
+Desenvolvimento de software · Ciência de dados  
+Sistemas de Informação · UNIFESSPA
 
-[E-mail](mailto:edumedeiros.medeiros5@gmail.com) · [Instagram](https://www.instagram.com/eduardodinniz)
+<img src="./assets/tech.svg" alt="Tecnologias" width="840" />
 
-### Tecnologias
-
-**Principal:** Go · Python · Pandas · Git · Godot  
-**Web:** TypeScript · JavaScript · React · WordPress  
-**Dados:** PostgreSQL · MySQL · MongoDB  
-**Ferramentas:** VS Code · Notion · Linux · Windows  
-**Estudando:** Godot · C
-
-### Contribuições
-
-<img src="https://raw.githubusercontent.com/EduardoMDiniz/EduardoMDiniz/refs/heads/output/contributions-3d.svg" alt="Trilha 3D de contribuições dos últimos 12 meses e linguagens usadas nos repositórios" width="840" />
+<img src="https://raw.githubusercontent.com/EduardoMDiniz/EduardoMDiniz/refs/heads/output/contributions-3d.svg" alt="Contribuições dos últimos 12 meses" width="840" />
