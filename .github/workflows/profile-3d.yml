@@ -1,0 +1,47 @@
+name: Perfil
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '23 6 * * *'
+  push:
+    branches: [main]
+    paths:
+      - scripts/generate_profile.py
+      - .github/workflows/profile-3d.yml
+
+permissions:
+  contents: write
+
+concurrency:
+  group: perfil
+  cancel-in-progress: true
+
+jobs:
+  gerar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Gerar SVG
+        env:
+          PROFILE_USERNAME: ${{ github.repository_owner }}
+          GH_TOKEN: ${{ github.token }}
+          PRIVATE_REPOS_TOKEN: ${{ secrets.PRIVATE_REPOS_TOKEN }}
+          PROFILE_CONTRIB_TOKEN: ${{ secrets.PROFILE_CONTRIB_TOKEN }}
+          OUTPUT_SVG: out/contributions-3d.svg
+        run: |
+          python3 scripts/generate_profile.py
+          python3 -c "import xml.dom.minidom as m; m.parse('out/contributions-3d.svg')"
+
+      - name: Publicar no branch output
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          cd out
+          git init -q -b output
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add contributions-3d.svg
+          git commit -q -m 'update'
+          git push -qf "https://x-access-token:${GH_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" output

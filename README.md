@@ -1,16 +1,17 @@
-## Hi there 👋
+# Eduardo Diniz
 
-<!--
-**EduardoMDiniz/EduardoMDiniz** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
+Analista de software e dados · Graduado em **Sistemas de Informação** pela UNIFESSPA.
 
-Here are some ideas to get you started:
+[E-mail](mailto:edumedeiros.medeiros5@gmail.com) · [Instagram](https://www.instagram.com/eduardodinniz)
 
-- 🔭 I’m currently working on ...
-- 🌱 I’m currently learning ...
-- 👯 I’m looking to collaborate on ...
-- 🤔 I’m looking for help with ...
-- 💬 Ask me about ...
-- 📫 How to reach me: ...
-- 😄 Pronouns: ...
-- ⚡ Fun fact: ...
--->
+### Tecnologias
+
+**Principal:** Go · Python · Pandas · Git · Godot  
+**Web:** TypeScript · JavaScript · React · WordPress  
+**Dados:** PostgreSQL · MySQL · MongoDB  
+**Ferramentas:** VS Code · Notion · Linux · Windows  
+**Estudando:** Godot · C
+
+### Contribuições
+
+<img src="https://raw.githubusercontent.com/EduardoMDiniz/EduardoMDiniz/output/contributions-3d.svg" alt="Trilha 3D de contribuições dos últimos 12 meses e linguagens usadas nos repositórios" width="770" />
