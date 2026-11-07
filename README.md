@@ -14,4 +14,4 @@ Analista de software e dados · Graduado em **Sistemas de Informação** pela UN
 
 ### Contribuições
 
-<img src="https://raw.githubusercontent.com/EduardoMDiniz/EduardoMDiniz/output/contributions-3d.svg" alt="Trilha 3D de contribuições dos últimos 12 meses e linguagens usadas nos repositórios" width="770" />
+<img src="https://raw.githubusercontent.com/EduardoMDiniz/EduardoMDiniz/refs/heads/output/contributions-3d.svg" alt="Trilha 3D de contribuições dos últimos 12 meses e linguagens usadas nos repositórios" width="770" />
