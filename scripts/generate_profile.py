@@ -100,7 +100,30 @@ COMMITS_QUERY = '''query($username:String!, $from:DateTime!, $to:DateTime!) {
 }'''
 
 
-def collect_commits(token: str, first: date, last: date, by_day: dict, colors: dict) -> None:
+def notice(message: str) -> None:
+    print(f'::notice::{message}', file=sys.stderr)
+
+
+COLORS_QUERY = '''query($username:String!, $privacy:RepositoryPrivacy) {
+  user(login:$username) {
+    repositories(first:100, privacy:$privacy, ownerAffiliations:[OWNER, COLLABORATOR, ORGANIZATION_MEMBER]) {
+      nodes { languages(first:20) { nodes { name color } } }
+    }
+  }
+}'''
+
+
+def collect_colors(token: str, privacy: str | None, colors: dict) -> None:
+    data = graphql(token, COLORS_QUERY, {'username': USERNAME, 'privacy': privacy})
+    for repo in data['user']['repositories']['nodes']:
+        for lang in repo['languages']['nodes']:
+            if lang.get('name') and lang.get('color'):
+                colors.setdefault(lang['name'], lang['color'])
+
+
+def collect_commits(token: str, first: date, last: date, by_day: dict, colors: dict, label: str) -> None:
+    repos: set[str] = set()
+    days: set[date] = set()
     start = first
     while start <= last:
         end = min(start + timedelta(days=120), last)
@@ -116,19 +139,27 @@ def collect_commits(token: str, first: date, last: date, by_day: dict, colors: d
                 continue
             if color:
                 colors[name] = color
+            repos.add(entry['repository']['nameWithOwner'])
             for node in entry['contributions']['nodes']:
                 day = date.fromisoformat(node['occurredAt'][:10])
                 by_day[day][name] += int(node['commitCount'])
+                days.add(day)
         start = end + timedelta(days=1)
+    notice(f'Commits mapeados ({label}): {len(repos)} repositórios, {len(days)} dias.')
 
 
 def get_day_languages(first: date, last: date) -> tuple[dict[date, str], dict[str, str]]:
     by_day: dict[date, Counter] = defaultdict(Counter)
     colors: dict[str, str] = {}
-    collect_commits(CONTRIB_TOKEN, first, last, by_day, colors)
+    collect_commits(CONTRIB_TOKEN, first, last, by_day, colors, 'token do workflow')
+    try:
+        collect_colors(CONTRIB_TOKEN, 'PUBLIC', colors)
+    except RuntimeError as exc:
+        warn(f'Cores das linguagens públicas indisponíveis: {exc}')
     if PRIVATE_REPOS_TOKEN:
         try:
-            collect_commits(PRIVATE_REPOS_TOKEN, first, last, by_day, colors)
+            collect_commits(PRIVATE_REPOS_TOKEN, first, last, by_day, colors, 'token privado')
+            collect_colors(PRIVATE_REPOS_TOKEN, 'PRIVATE', colors)
         except RuntimeError as exc:
             warn(f'Commits privados sem cor por linguagem: {exc}')
     return {day: langs.most_common(1)[0][0] for day, langs in by_day.items() if langs}, colors
