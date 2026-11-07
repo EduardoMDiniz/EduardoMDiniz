@@ -148,7 +148,32 @@ def collect_commits(token: str, first: date, last: date, by_day: dict, colors: d
     notice(f'Commits mapeados ({label}): {len(repos)} repositórios, {len(days)} dias.')
 
 
-def get_day_languages(first: date, last: date) -> tuple[dict[date, str], dict[str, str]]:
+def collect_private_commits(repos: list[dict], first: date, by_day: dict) -> None:
+    days: set[date] = set()
+    mapped = 0
+    since = datetime(first.year, first.month, first.day, tzinfo=timezone.utc).isoformat()
+    for repo in repos:
+        name, lang = repo.get('full_name'), repo.get('language')
+        if repo.get('fork') or not name or not lang:
+            continue
+        url = f'{API}/repos/{quote(name, safe="/")}/commits?author={quote(USERNAME)}&since={quote(since)}'
+        try:
+            commits = get_repos(url, PRIVATE_REPOS_TOKEN)
+        except RuntimeError as exc:
+            warn(f'Commits de um repositório privado ignorados: {exc}')
+            continue
+        for commit in commits:
+            when = ((commit.get('commit') or {}).get('author') or {}).get('date')
+            if not when:
+                continue
+            day = date.fromisoformat(when[:10])
+            by_day[day][lang] += 1
+            days.add(day)
+        mapped += bool(commits)
+    notice(f'Commits privados via REST: {mapped} repositórios com commits, {len(days)} dias.')
+
+
+def get_day_languages(first: date, last: date, private_repos: list[dict]) -> tuple[dict[date, str], dict[str, str]]:
     by_day: dict[date, Counter] = defaultdict(Counter)
     colors: dict[str, str] = {}
     collect_commits(CONTRIB_TOKEN, first, last, by_day, colors, 'token do workflow')
@@ -157,11 +182,11 @@ def get_day_languages(first: date, last: date) -> tuple[dict[date, str], dict[st
     except RuntimeError as exc:
         warn(f'Cores das linguagens públicas indisponíveis: {exc}')
     if PRIVATE_REPOS_TOKEN:
+        collect_private_commits(private_repos, first, by_day)
         try:
-            collect_commits(PRIVATE_REPOS_TOKEN, first, last, by_day, colors, 'token privado')
             collect_colors(PRIVATE_REPOS_TOKEN, 'PRIVATE', colors)
         except RuntimeError as exc:
-            warn(f'Commits privados sem cor por linguagem: {exc}')
+            warn(f'Cores das linguagens privadas indisponíveis: {exc}')
     return {day: langs.most_common(1)[0][0] for day, langs in by_day.items() if langs}, colors
 
 
@@ -178,17 +203,23 @@ def get_repos(base_url: str, token: str) -> list[dict]:
     raise RuntimeError('Mais de 2000 repositórios.')
 
 
-def get_languages() -> tuple[Counter, int]:
+def get_private_repos() -> list[dict]:
+    if not PRIVATE_REPOS_TOKEN:
+        return []
+    try:
+        repos = get_repos(
+            f'{API}/user/repos?visibility=private&affiliation=owner,collaborator,organization_member',
+            PRIVATE_REPOS_TOKEN,
+        )
+    except RuntimeError as exc:
+        warn(f'Repositórios privados ignorados: {exc}')
+        return []
+    return [r for r in repos if r.get('private')]
+
+
+def get_languages(private: list[dict]) -> tuple[Counter, int]:
     accessible = [(r, GH_TOKEN) for r in get_repos(f'{API}/users/{quote(USERNAME)}/repos?type=owner', GH_TOKEN)]
-    if PRIVATE_REPOS_TOKEN:
-        try:
-            private = get_repos(
-                f'{API}/user/repos?visibility=private&affiliation=owner,collaborator,organization_member',
-                PRIVATE_REPOS_TOKEN,
-            )
-            accessible.extend((r, PRIVATE_REPOS_TOKEN) for r in private if r.get('private'))
-        except RuntimeError as exc:
-            warn(f'Repositórios privados ignorados: {exc}')
+    accessible.extend((r, PRIVATE_REPOS_TOKEN) for r in private)
 
     totals: Counter = Counter()
     seen: set[str] = set()
@@ -351,12 +382,13 @@ def make_svg(days: list[dict], languages: Counter, private_repos: int,
 def main() -> None:
     days = get_days()
     first, last = min(d['date'] for d in days), max(d['date'] for d in days)
+    private = get_private_repos()
     try:
-        day_lang, colors = get_day_languages(first, last)
+        day_lang, colors = get_day_languages(first, last, private)
     except RuntimeError as exc:
         warn(f'Cor por linguagem indisponível: {exc}')
         day_lang, colors = {}, {}
-    languages, private_repos = get_languages()
+    languages, private_repos = get_languages(private)
     OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     OUTPUT.write_text(make_svg(days, languages, private_repos, day_lang, colors), encoding='utf-8')
     print(f'{len(days)} dias, {sum(d["count"] for d in days)} contribuições, {len(day_lang)} dias com linguagem, '
